@@ -9,9 +9,10 @@ export default function useVisualMode (initial) {
     if (replace) {
       history.pop();
     }
-    
+
     setMode(newMode);
     setHistory(prev => [...prev, newMode]);
+    return { mode };
   }
 
   function back() {
