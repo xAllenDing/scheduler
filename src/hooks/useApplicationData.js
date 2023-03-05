@@ -45,13 +45,12 @@ export default function useApplicationData(props) {
       [id]: appointment
     };
 
-    const days = updateSpots(id, 'confirmed');
-
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((response) => {
-        setState({ ...state, appointments, days });
+        const days = updateSpots(state, appointments);
+        setState(prev => ({ ...prev, days, appointments }));
       });
-  }
+  };
 
   function cancelInterview(id) {
 
@@ -65,28 +64,27 @@ export default function useApplicationData(props) {
       [id]: appointment
     };
 
-    const days = updateSpots(id, 'canceled');
-
     return axios.delete(`/api/appointments/${id}`)
       .then((response) => {
-        setState({ ...state, appointments, days });
+        const days = updateSpots(state, appointments);
+        setState(prev => ({ ...prev, days, appointments }));
       });
   };
 
-  function updateSpots(id, action) {
-    const stateCopy = { ...state };
+  function updateSpots(state, appointments, id) {
+    const dayObj = state.days.find(d => d.name === state.day);
 
-    stateCopy.days.forEach((day) => {
-      if (day.appointments.includes(id) && action === 'confirmed') {
-        day.spots--;
+    let count = 0;
+
+    for (let id of dayObj.appointments) {
+      const appointment = appointments[id];
+      if (!appointment.interview) {
+        count++;
       }
+    };
 
-      if (day.appointments.includes(id) && action === 'canceled') {
-        day.spots++;
-      }
-    });
-
-    return stateCopy.days;
+    const day = { ...dayObj, spots: count };
+    return state.days.map(d => d.name === state.day ? day : d);
   };
 
   return { state, setDay, bookInterview, cancelInterview };
