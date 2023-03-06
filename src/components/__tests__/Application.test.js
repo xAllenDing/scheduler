@@ -128,7 +128,7 @@ describe("Application", () => {
 
     fireEvent.click(getByAltText(appointment, "Delete"));
 
-   await waitForElement(() => getByText(appointment, "Confirm"));
+    await waitForElement(() => getByText(appointment, "Confirm"));
 
     axios.delete.mockRejectedValueOnce();
     fireEvent.click(getByText(appointment, "Confirm"));
