@@ -1,4 +1,7 @@
 # Interview Scheduler
+This is a scheduling application completed during the Lighthouse Lab bootcamp. This app allows user to book, edit, or delete appointments for different days of the week. The appointment spots remaining for each day is updated upon the users input. This project requires the use of ReactJS, HTML, CSS for the front-end and Node, Express, and SQL for the back-end. Storybook, Jest, and Cypress is used for testing.
+
+
 
 ## Setup
 
