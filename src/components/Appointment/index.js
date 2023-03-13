@@ -27,14 +27,15 @@ export default function Appointment(props) {
   );
 
   function save(name, interviewer) {
-    console.log("name :", name);
+   
     const interview = {
       student: name,
       interviewer
     };
+
     transition(SAVING);
     props.bookInterview(props.id, interview)
-      .then((response) => {
+      .then(() => {
         return transition(SHOW);
       })
       .catch(error => {
